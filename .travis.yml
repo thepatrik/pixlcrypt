@@ -1,0 +1,18 @@
+language: node_js
+
+node_js: 10
+
+addons:
+  postgresql: "9.4"
+
+services: docker
+
+before_install: pip install awscli --user
+
+before_script:
+  - psql -c 'create database travis_ci_test;' -U postgres
+  - make db
+
+script: make eslint
+
+after_success: make aws-ecs-deploy
