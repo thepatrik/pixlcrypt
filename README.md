@@ -1,4 +1,7 @@
 # pixlcrypt
+[![Build Status](https://travis-ci.org/thepatrik/pixlcrypt.svg?branch=master)](https://travis-ci.org/thepatrik/pixlcrypt)
+
+Storage service for pixels.
 
 ## development
 
