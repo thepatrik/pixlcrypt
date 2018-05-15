@@ -1,0 +1,7 @@
+#!/usr/bin/env bash
+psql -c 'DROP SCHEMA public CASCADE'
+psql -c ' CREATE SCHEMA public'
+
+#From PostgreSQL 9.3
+psql -c 'GRANT ALL ON SCHEMA public TO postgres'
+psql -c 'GRANT ALL ON SCHEMA public TO public'

@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+
+echo -n "Enter username: "
+read username
+
+dbname=photos
+instance=pixlcrypt
+port=5432
+
+psql --set=sslmode=require --host=$instance.ct6e4mjshqab.eu-west-1.rds.amazonaws.com --port=$port --password --dbname=$dbname --username=$username

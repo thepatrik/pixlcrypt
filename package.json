@@ -1,0 +1,41 @@
+{
+  "name": "pixlcrypt",
+  "version": "1.0.0",
+  "description": "",
+  "main": "lib/app.js",
+  "private": true,
+  "scripts": {
+    "connect": "npx postgraphile -c postgres://postgres@localhost/$(whoami) --schema pixlcrypt",
+    "db": "make db --directory db/",
+    "docker:build": "docker build -t thepatrik/pixlcrypt .",
+    "docker:run": "docker run --env-file ./.env thepatrik/pixlcrypt",
+    "start": "node lib/app.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/thepatrik/pixlcrypt.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/thepatrik/pixlcrypt/issues"
+  },
+  "homepage": "https://github.com/thepatrik/pixlcrypt#readme",
+  "dependencies": {
+    "bunyan": "^1.8.12",
+    "bunyan-middleware": "^0.8.0",
+    "compression": "^1.7.2",
+    "cors": "^2.8.4",
+    "dotenv": "^5.0.1",
+    "express": "^4.16.3",
+    "express-unless": "^0.5.0",
+    "helmet": "^3.12.0",
+    "postgraphile": "^4.0.0-beta.8",
+    "restify-errors": "^6.0.0"
+  },
+  "devDependencies": {
+    "fakefile": "0.0.9"
+  }
+}
