@@ -32,3 +32,8 @@ Run linter
 ```bash
 $ make eslint
 ```
+
+Create AWS lambda distribution
+```bash
+$ make lambda
+```
