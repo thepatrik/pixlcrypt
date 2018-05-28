@@ -17,6 +17,7 @@ Create a .env file and add environment variables to it
 * `PORT` server port
 * `DATABASE_SCHEMA` database schema name
 * `DATABASE_URL` database url
+* `DISABLE_QUERY_LOG` Set to `true` to disable query log (default to `false`)
 * `USE_COMPRESSION` Can be `true` (default) or `false`
 
 ### scripts
