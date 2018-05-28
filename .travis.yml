@@ -13,6 +13,8 @@ before_script:
   - psql -c 'create database travis_ci_test;' -U postgres
   - make db
 
-script: make eslint
+script:
+  - make eslint
+  - make test
 
 after_success: make aws-ecs-deploy

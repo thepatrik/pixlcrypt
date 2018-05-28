@@ -5,6 +5,10 @@ Storage service for pixels.
 
 ## development
 
+### PostgreSQL
+
+Install PostgreSQL from [https://www.postgresql.org/download/](https://www.postgresql.org/download/)
+
 ### .env
 
 Create a .env file and add environment variables to it
@@ -27,6 +31,12 @@ Run app with
 
 ```bash
 $ make start
+```
+
+Run tests
+
+```bash
+$ make test
 ```
 
 Run linter
