@@ -20,6 +20,12 @@ Create a .env file and add environment variables to it
 * `DISABLE_QUERY_LOG` Set to `true` to disable query log (default to `false`)
 * `USE_COMPRESSION` Can be `true` (default) or `false`
 
+Test/CI variables
+* `TEST_USER_USERNAME` Set username to be used during API tests
+* `TEST_USER_PASSWORD` Set password to be used during API tests
+* `AWS_ACCESS_KEY_ID` AWS access key id
+* `AWS_SECRET_ACCESS_KEY` AWS secret access key
+
 ### scripts
 
 Install app dependencies

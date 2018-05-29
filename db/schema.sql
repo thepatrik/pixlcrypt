@@ -1,6 +1,11 @@
 create schema if not exists pixlcrypt;
 create schema if not exists pixlcrypt_private;
 
+create type pixlcrypt.jwt_token as (
+  role text,
+  email text
+);
+
 create table pixlcrypt.user (
   id    serial primary key,
   username  text not null check (char_length(username) < 120) UNIQUE,
