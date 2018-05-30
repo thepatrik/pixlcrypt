@@ -2,8 +2,8 @@ create schema if not exists pixlcrypt;
 create schema if not exists pixlcrypt_private;
 
 create type pixlcrypt.jwt_token as (
-  role text,
-  email text
+  email text,
+  role text
 );
 
 create table pixlcrypt.user (
@@ -20,6 +20,14 @@ comment on column pixlcrypt.user.id is 'The primary key for the user.';
 comment on column pixlcrypt.user.name is 'The name of the user.';
 comment on column pixlcrypt.user.created_at is 'The time the user was last updated.';
 comment on column pixlcrypt.user.created_at is 'The time the user was created.';
+
+create function pixlcrypt.current_user() returns pixlcrypt.user as $$
+  select *
+  from pixlcrypt.user
+  where email = current_setting('jwt.claims.email')
+$$ language sql stable;
+
+comment on function pixlcrypt.current_user() is 'Gets the user who was identified by our JWT.';
 
 create type pixlcrypt.content_type as enum (
   'photo',
@@ -87,3 +95,11 @@ create trigger item_updated_at before update
   on pixlcrypt.item
   for each row
   execute procedure pixlcrypt_private.set_updated_at();
+
+alter table pixlcrypt.user enable row level security;
+alter table pixlcrypt.item enable row level security;
+alter table pixlcrypt.tag enable row level security;
+alter table pixlcrypt.thumb enable row level security;
+alter table pixlcrypt.item_tag enable row level security;
+
+alter default privileges revoke execute on functions from public;

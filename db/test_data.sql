@@ -3,8 +3,17 @@ insert into
 pixlcrypt.user(name, username, email)
 values(
     'Patrik Palmér',
-    'thepatrik',
-    'patrik@pixlcrypt.com'
+    '3f4dc53f-bfa8-4825-9740-f057ceceeb32',
+    'pixlcrypt@gmail.com'
+);
+
+--Insert user
+insert into
+pixlcrypt.user(name, username, email)
+values(
+    'Barack Obama',
+    'theman',
+    'barack@obama.gov'
 );
 
 --Insert item
@@ -16,7 +25,7 @@ values(
     'Totally awesome stuff',
     'image/jpeg',
     'photo',
-    (select id from pixlcrypt.user where email='patrik@pixlcrypt.com')
+    (select id from pixlcrypt.user where email='pixlcrypt@gmail.com')
 );
 
 insert into
@@ -33,7 +42,7 @@ pixlcrypt.tag(key, val, user_id)
 values(
     'Nature',
     'Nature',
-    (select id from pixlcrypt.user where email='patrik@pixlcrypt.com')
+    (select id from pixlcrypt.user where email='pixlcrypt@gmail.com')
 );
 
 insert into
@@ -41,21 +50,21 @@ pixlcrypt.tag(key, val, user_id)
 values(
     'Flora',
     'Flora',
-    (select id from pixlcrypt.user where email='patrik@pixlcrypt.com')
+    (select id from pixlcrypt.user where email='pixlcrypt@gmail.com')
 );
 
 insert into
 pixlcrypt.item_tag(item_id, tag_id)
 values(
     (select id from pixlcrypt.item where src='https://c2.staticflickr.com/9/8817/28973449265_07e3aa5d2e_b.jpg'),
-    (select id from pixlcrypt.tag where key='Nature' and user_id=(select id from pixlcrypt.user where email='patrik@pixlcrypt.com'))
+    (select id from pixlcrypt.tag where key='Nature' and user_id=(select id from pixlcrypt.user where email='pixlcrypt@gmail.com'))
 );
 
 insert into
 pixlcrypt.item_tag(item_id, tag_id)
 values(
     (select id from pixlcrypt.item where src='https://c2.staticflickr.com/9/8817/28973449265_07e3aa5d2e_b.jpg'),
-    (select id from pixlcrypt.tag where key='Flora' and user_id=(select id from pixlcrypt.user where email='patrik@pixlcrypt.com'))
+    (select id from pixlcrypt.tag where key='Flora' and user_id=(select id from pixlcrypt.user where email='pixlcrypt@gmail.com'))
 );
 
 --Insert item
@@ -66,7 +75,7 @@ values(
     'Boats (Jeshu John - designerspics.com)',
     'image/jpeg',
     'photo',
-    (select id from pixlcrypt.user where email='patrik@pixlcrypt.com')
+    (select id from pixlcrypt.user where email='pixlcrypt@gmail.com')
 );
 
 insert into
@@ -86,7 +95,7 @@ values(
     'Color Pencils (Jeshu John - designerspics.com)',
     'image/jpeg',
     'photo',
-    (select id from pixlcrypt.user where email='patrik@pixlcrypt.com')
+    (select id from pixlcrypt.user where email='pixlcrypt@gmail.com')
 );
 
 insert into
@@ -106,7 +115,7 @@ values(
     'Red Apples with other Red Fruit (foodiesfeed.com)',
     'image/jpeg',
     'photo',
-    (select id from pixlcrypt.user where email='patrik@pixlcrypt.com')
+    (select id from pixlcrypt.user where email='pixlcrypt@gmail.com')
 );
 
 insert into
@@ -126,7 +135,7 @@ values(
     '37H (gratispgraphy.com)',
     'image/jpeg',
     'photo',
-    (select id from pixlcrypt.user where email='patrik@pixlcrypt.com')
+    (select id from pixlcrypt.user where email='pixlcrypt@gmail.com')
 );
 
 insert into
@@ -146,7 +155,7 @@ values(
     '8H (gratisography.com)',
     'image/jpeg',
     'photo',
-    (select id from pixlcrypt.user where email='patrik@pixlcrypt.com')
+    (select id from pixlcrypt.user where email='pixlcrypt@gmail.com')
 );
 
 insert into
@@ -162,7 +171,7 @@ insert into
 pixlcrypt.item_tag(item_id, tag_id)
 values(
     (select id from pixlcrypt.item where src='https://c5.staticflickr.com/9/8768/28941110956_b05ab588c1_b.jpg'),
-    (select id from pixlcrypt.tag where key='Nature' and user_id=(select id from pixlcrypt.user where email='patrik@pixlcrypt.com'))
+    (select id from pixlcrypt.tag where key='Nature' and user_id=(select id from pixlcrypt.user where email='pixlcrypt@gmail.com'))
 );
 
 --Insert item
@@ -173,7 +182,7 @@ values(
     '286H (gratisography.com)',
     'image/jpeg',
     'photo',
-    (select id from pixlcrypt.user where email='patrik@pixlcrypt.com')
+    (select id from pixlcrypt.user where email='pixlcrypt@gmail.com')
 );
 
 insert into
@@ -193,7 +202,7 @@ values(
     '315H (gratisography.com)',
     'image/jpeg',
     'photo',
-    (select id from pixlcrypt.user where email='patrik@pixlcrypt.com')
+    (select id from pixlcrypt.user where email='pixlcrypt@gmail.com')
 );
 
 insert into
@@ -210,14 +219,14 @@ pixlcrypt.tag(key, val, user_id)
 values(
     'People',
     'People',
-    (select id from pixlcrypt.user where email='patrik@pixlcrypt.com')
+    (select id from pixlcrypt.user where email='pixlcrypt@gmail.com')
 );
 
 insert into
 pixlcrypt.item_tag(item_id, tag_id)
 values(
     (select id from pixlcrypt.item where src='https://c7.staticflickr.com/9/8569/28941134686_d57273d933_b.jpg'),
-    (select id from pixlcrypt.tag where key='People' and user_id=(select id from pixlcrypt.user where email='patrik@pixlcrypt.com'))
+    (select id from pixlcrypt.tag where key='People' and user_id=(select id from pixlcrypt.user where email='pixlcrypt@gmail.com'))
 );
 
 --Insert item
@@ -228,7 +237,7 @@ values(
     '201H (gratisography.com)',
     'image/jpeg',
     'photo',
-    (select id from pixlcrypt.user where email='patrik@pixlcrypt.com')
+    (select id from pixlcrypt.user where email='pixlcrypt@gmail.com')
 );
 
 insert into
@@ -249,7 +258,7 @@ values(
     'Big Ben (Tom Eversley - isorepublic.com)',
     'image/jpeg',
     'photo',
-    (select id from pixlcrypt.user where email='patrik@pixlcrypt.com')
+    (select id from pixlcrypt.user where email='pixlcrypt@gmail.com')
 );
 
 insert into
@@ -270,7 +279,7 @@ values(
     'Red Zone - Paris (Tom Eversley - isorepublic.com)',
     'image/jpeg',
     'photo',
-    (select id from pixlcrypt.user where email='patrik@pixlcrypt.com')
+    (select id from pixlcrypt.user where email='pixlcrypt@gmail.com')
 );
 
 insert into
@@ -286,7 +295,7 @@ insert into
 pixlcrypt.item_tag(item_id, tag_id)
 values(
     (select id from pixlcrypt.item where src='https://c7.staticflickr.com/9/8785/28687743710_3580fcb5f0_b.jpg'),
-    (select id from pixlcrypt.tag where key='People' and user_id=(select id from pixlcrypt.user where email='patrik@pixlcrypt.com'))
+    (select id from pixlcrypt.tag where key='People' and user_id=(select id from pixlcrypt.user where email='pixlcrypt@gmail.com'))
 );
 
 --Insert item
@@ -298,7 +307,7 @@ values(
     'Wood Glass (Tom Eversley - isorepublic.com)',
     'image/jpeg',
     'photo',
-    (select id from pixlcrypt.user where email='patrik@pixlcrypt.com')
+    (select id from pixlcrypt.user where email='pixlcrypt@gmail.com')
 );
 
 insert into
@@ -318,7 +327,7 @@ values(
     'Flower Interior Macro (Tom Eversley - isorepublic.com)',
     'image/jpeg',
     'photo',
-    (select id from pixlcrypt.user where email='patrik@pixlcrypt.com')
+    (select id from pixlcrypt.user where email='pixlcrypt@gmail.com')
 );
 
 insert into
@@ -338,7 +347,7 @@ values(
     'Old Barn (Tom Eversley - isorepublic.com)',
     'image/jpeg',
     'photo',
-    (select id from pixlcrypt.user where email='patrik@pixlcrypt.com')
+    (select id from pixlcrypt.user where email='pixlcrypt@gmail.com')
 );
 
 insert into
@@ -359,7 +368,7 @@ values(
     'Cosmos Flower Macro (Tom Eversley - isorepublic.com)',
     'image/jpeg',
     'photo',
-    (select id from pixlcrypt.user where email='patrik@pixlcrypt.com')
+    (select id from pixlcrypt.user where email='pixlcrypt@gmail.com')
 );
 
 insert into
@@ -379,7 +388,7 @@ values(
     'Orange Macro (Tom Eversley - isorepublic.com)',
     'image/jpeg',
     'photo',
-    (select id from pixlcrypt.user where email='patrik@pixlcrypt.com')
+    (select id from pixlcrypt.user where email='pixlcrypt@gmail.com')
 );
 
 insert into
@@ -399,7 +408,7 @@ values(
     'Surfer Sunset (Tom Eversley - isorepublic.com)',
     'image/jpeg',
     'photo',
-    (select id from pixlcrypt.user where email='patrik@pixlcrypt.com')
+    (select id from pixlcrypt.user where email='pixlcrypt@gmail.com')
 );
 
 insert into
@@ -415,14 +424,14 @@ insert into
 pixlcrypt.item_tag(item_id, tag_id)
 values(
     (select id from pixlcrypt.item where src='https://c1.staticflickr.com/9/8330/28941240416_71d2a7af8e_b.jpg'),
-    (select id from pixlcrypt.tag where key='Nature' and user_id=(select id from pixlcrypt.user where email='patrik@pixlcrypt.com'))
+    (select id from pixlcrypt.tag where key='Nature' and user_id=(select id from pixlcrypt.user where email='pixlcrypt@gmail.com'))
 );
 
 insert into
 pixlcrypt.item_tag(item_id, tag_id)
 values(
     (select id from pixlcrypt.item where src='https://c1.staticflickr.com/9/8330/28941240416_71d2a7af8e_b.jpg'),
-    (select id from pixlcrypt.tag where key='People' and user_id=(select id from pixlcrypt.user where email='patrik@pixlcrypt.com'))
+    (select id from pixlcrypt.tag where key='People' and user_id=(select id from pixlcrypt.user where email='pixlcrypt@gmail.com'))
 );
 
 --Insert item
@@ -433,7 +442,7 @@ values(
     'Man on BMX (Tom Eversley - isorepublic.com)',
     'image/jpeg',
     'photo',
-    (select id from pixlcrypt.user where email='patrik@pixlcrypt.com')
+    (select id from pixlcrypt.user where email='pixlcrypt@gmail.com')
 );
 
 insert into
@@ -450,21 +459,21 @@ pixlcrypt.tag(key, val, user_id)
 values(
     'Sport',
     'Sport',
-    (select id from pixlcrypt.user where email='patrik@pixlcrypt.com')
+    (select id from pixlcrypt.user where email='pixlcrypt@gmail.com')
 );
 
 insert into
 pixlcrypt.item_tag(item_id, tag_id)
 values(
     (select id from pixlcrypt.item where src='https://c1.staticflickr.com/9/8707/28868704912_cba5c6600e_b.jpg'),
-    (select id from pixlcrypt.tag where key='Sport' and user_id=(select id from pixlcrypt.user where email='patrik@pixlcrypt.com'))
+    (select id from pixlcrypt.tag where key='Sport' and user_id=(select id from pixlcrypt.user where email='pixlcrypt@gmail.com'))
 );
 
 insert into
 pixlcrypt.item_tag(item_id, tag_id)
 values(
     (select id from pixlcrypt.item where src='https://c1.staticflickr.com/9/8707/28868704912_cba5c6600e_b.jpg'),
-    (select id from pixlcrypt.tag where key='People' and user_id=(select id from pixlcrypt.user where email='patrik@pixlcrypt.com'))
+    (select id from pixlcrypt.tag where key='People' and user_id=(select id from pixlcrypt.user where email='pixlcrypt@gmail.com'))
 );
 
 --Insert item
@@ -475,7 +484,7 @@ values(
     'Ropeman - Thailand (Tom Eversley - isorepublic.com)',
     'image/jpeg',
     'photo',
-    (select id from pixlcrypt.user where email='patrik@pixlcrypt.com')
+    (select id from pixlcrypt.user where email='pixlcrypt@gmail.com')
 );
 
 insert into
@@ -495,7 +504,7 @@ values(
     'Time to Think (Tom Eversley - isorepublic.com)',
     'image/jpeg',
     'photo',
-    (select id from pixlcrypt.user where email='patrik@pixlcrypt.com')
+    (select id from pixlcrypt.user where email='pixlcrypt@gmail.com')
 );
 
 insert into
@@ -515,7 +524,7 @@ values(
     'Untitled (Jan Vasek - jeshoots.com)',
     'image/jpeg',
     'photo',
-    (select id from pixlcrypt.user where email='patrik@pixlcrypt.com')
+    (select id from pixlcrypt.user where email='pixlcrypt@gmail.com')
 );
 
 insert into
@@ -532,21 +541,21 @@ pixlcrypt.tag(key, val, user_id)
 values(
     'Fauna',
     'Fauna',
-    (select id from pixlcrypt.user where email='patrik@pixlcrypt.com')
+    (select id from pixlcrypt.user where email='pixlcrypt@gmail.com')
 );
 
 insert into
 pixlcrypt.item_tag(item_id, tag_id)
 values(
     (select id from pixlcrypt.item where src='https://c6.staticflickr.com/9/8593/28357129133_f04c73bf1e_b.jpg'),
-    (select id from pixlcrypt.tag where key='Fauna' and user_id=(select id from pixlcrypt.user where email='patrik@pixlcrypt.com'))
+    (select id from pixlcrypt.tag where key='Fauna' and user_id=(select id from pixlcrypt.user where email='pixlcrypt@gmail.com'))
 );
 
 insert into
 pixlcrypt.item_tag(item_id, tag_id)
 values(
     (select id from pixlcrypt.item where src='https://c6.staticflickr.com/9/8593/28357129133_f04c73bf1e_b.jpg'),
-    (select id from pixlcrypt.tag where key='Nature' and user_id=(select id from pixlcrypt.user where email='patrik@pixlcrypt.com'))
+    (select id from pixlcrypt.tag where key='Nature' and user_id=(select id from pixlcrypt.user where email='pixlcrypt@gmail.com'))
 );
 
 --Insert item
@@ -557,7 +566,7 @@ values(
     'UUntitled (moveast.me)',
     'image/jpeg',
     'photo',
-    (select id from pixlcrypt.user where email='patrik@pixlcrypt.com')
+    (select id from pixlcrypt.user where email='pixlcrypt@gmail.com')
 );
 
 insert into
@@ -573,7 +582,7 @@ insert into
 pixlcrypt.item_tag(item_id, tag_id)
 values(
     (select id from pixlcrypt.item where src='https://c6.staticflickr.com/9/8893/28897116141_641b88e342_b.jpg'),
-    (select id from pixlcrypt.tag where key='People' and user_id=(select id from pixlcrypt.user where email='patrik@pixlcrypt.com'))
+    (select id from pixlcrypt.tag where key='People' and user_id=(select id from pixlcrypt.user where email='pixlcrypt@gmail.com'))
 );
 
 --Insert item
@@ -584,7 +593,7 @@ values(
     'A photo by 贝莉儿 NG. (unsplash.com)',
     'image/jpeg',
     'photo',
-    (select id from pixlcrypt.user where email='patrik@pixlcrypt.com')
+    (select id from pixlcrypt.user where email='pixlcrypt@gmail.com')
 );
 
 insert into
@@ -604,7 +613,7 @@ values(
     'AA photo by Matthew Wiebe. (unsplash.com)',
     'image/jpeg',
     'photo',
-    (select id from pixlcrypt.user where email='patrik@pixlcrypt.com')
+    (select id from pixlcrypt.user where email='pixlcrypt@gmail.com')
 );
 
 insert into
