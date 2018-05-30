@@ -64,6 +64,6 @@ create policy select_tag on pixlcrypt.tag for select to pixlcrypt_user
 create policy select_tag_item on pixlcrypt.item_tag for select
   using (true);
 
--- Thumb policies
+-- Thumb policies TODO: Look at policy!
 create policy select_thumb on pixlcrypt.thumb for select to pixlcrypt_user
-  using (user_id = (select id from pixlcrypt.user where email = current_setting('jwt.claims.email')));
+  using (true);
