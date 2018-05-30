@@ -3,18 +3,26 @@ language: node_js
 node_js: 10
 
 addons:
-  postgresql: "9.4"
+    postgresql: "9.6"
+
+install:
+    - npm ci
+
+# keep the npm cache around to speed up installs
+cache:
+    directories:
+        - "$HOME/.npm"
 
 services: docker
 
 before_install: pip install awscli --user
 
 before_script:
-  - psql -c 'create database travis_ci_test;' -U postgres
-  - make db
+    - psql -c 'create database travis_ci_test;' -U postgres
+    - make db
 
 script:
-  - make eslint
-  - make test
+    - make eslint
+    - make test
 
 after_success: make aws-ecs-deploy
