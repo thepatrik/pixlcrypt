@@ -4,21 +4,59 @@ const expect = require("chai").expect;
 const request = require("supertest");
 const app = require("../lib/app");
 const awsHelper = require("../lib/awsHelper");
+const s3Url = "https://s3-eu-west-1.amazonaws.com/pixlcrypt-content/users/pixlcrypt%40gmail.com/src/28973449265_07e3aa5d2e_b.jpg";
 const username = process.env.TEST_USER_USERNAME;
 const password = process.env.TEST_USER_PASSWORD;
 let token;
+
+describe("HTTP GET /health", () => {
+    it("200 - ok", done => {
+        request(app)
+            .get("/health")
+            .expect(200, done);
+    });
+});
 
 describe("Fetch development access token", () => {
     it("Fetch token", done => {
         awsHelper.getToken(username, password).then(res => {
             token = res;
-            console.log(token);
             expect(token).to.not.be.empty;
             done();
         }).catch(err => {
             console.log(err);
             expect(token).to.not.be.empty;
         });
+    });
+});
+
+describe("HTTP GET /presign", () => {
+    it("401 - unauthorized", done => {
+        request(app)
+            .get("/presign")
+            .expect(401, done);
+    });
+    it("400 - no url sent", done => {
+        request(app)
+            .get("/presign")
+            .set("Authorization", "Bearer " + token)
+            .expect(400, done);
+    });
+    it("200 - ok", done => {
+        request(app)
+            .get("/presign?url=" + s3Url)
+            .set("Authorization", "Bearer " + token)
+            .expect(res => {
+                expect(res.body.url).to.not.be.empty;})
+            .expect(200, done);
+    });
+});
+
+describe("HTTP GET 404", () => {
+    it("404 - not found", done => {
+        request(app)
+            .get("/abracadabra")
+            .expect(404, done);
     });
 });
 

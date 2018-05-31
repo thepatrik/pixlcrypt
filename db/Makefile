@@ -2,16 +2,16 @@
 
 .PHONY: _drop-public
 _drop-public:
-	psql -c 'DROP SCHEMA pixlcrypt CASCADE'
+	psql -c 'DROP SCHEMA IF EXISTS pixlcrypt CASCADE'
 
 .PHONY: _drop-private
 _drop-private:
-	psql -c 'DROP SCHEMA pixlcrypt_private CASCADE'
+	psql -c 'DROP SCHEMA IF EXISTS pixlcrypt_private CASCADE'
 
 .PHONY: _drop-roles
 _drop-roles:
-	psql -c 'DROP USER IF EXISTS pixlcrypt_postgraphile'
-	psql -c 'DROP USER IF EXISTS pixlcrypt_user'
+	# psql -c 'DROP USER IF EXISTS pixlcrypt_postgraphile'
+	# psql -c 'DROP USER IF EXISTS pixlcrypt_user'
 
 .PHONY: drop
 drop: _drop-public _drop-private _drop-roles
