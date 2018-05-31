@@ -11,9 +11,60 @@ values(
 insert into
 pixlcrypt.user(name, username, email)
 values(
-    'Barack Obama',
-    'theman',
-    'barack@obama.gov'
+    'Patrik Palmér',
+    'thepatrik',
+    'patrik.palmer@gmail.com'
+);
+
+--Insert item
+insert into
+pixlcrypt.item(src, caption, description, mime, content_type, user_id)
+values(
+    'https://s3-eu-west-1.amazonaws.com/pixlcrypt-content/users/patrik.palmer%40gmail.com/src/28973449265_07e3aa5d2e_b.jpg',
+    'After Rain (Jeshu John - designerspics.com)',
+    'Totally awesome stuff',
+    'image/jpeg',
+    'photo',
+    (select id from pixlcrypt.user where email='patrik.palmer@gmail.com')
+);
+
+insert into
+pixlcrypt.thumb(src, width, height, item_id)
+values(
+    'https://s3-eu-west-1.amazonaws.com/pixlcrypt-content/users/patrik.palmer%40gmail.com/tmb/28973449265_07e3aa5d2e_n.jpg',
+    320,
+    174,
+    (select id from pixlcrypt.item where src='https://s3-eu-west-1.amazonaws.com/pixlcrypt-content/users/patrik.palmer%40gmail.com/src/28973449265_07e3aa5d2e_b.jpg')
+);
+
+insert into
+pixlcrypt.tag(key, val, user_id)
+values(
+    'Nature',
+    'Nature',
+    (select id from pixlcrypt.user where email='patrik.palmer@gmail.com')
+);
+
+insert into
+pixlcrypt.tag(key, val, user_id)
+values(
+    'Flora',
+    'Flora',
+    (select id from pixlcrypt.user where email='patrik.palmer@gmail.com')
+);
+
+insert into
+pixlcrypt.item_tag(item_id, tag_id)
+values(
+    (select id from pixlcrypt.item where src='https://s3-eu-west-1.amazonaws.com/pixlcrypt-content/users/patrik.palmer%40gmail.com/src/28973449265_07e3aa5d2e_b.jpg'),
+    (select id from pixlcrypt.tag where key='Nature' and user_id=(select id from pixlcrypt.user where email='patrik.palmer@gmail.com'))
+);
+
+insert into
+pixlcrypt.item_tag(item_id, tag_id)
+values(
+    (select id from pixlcrypt.item where src='https://s3-eu-west-1.amazonaws.com/pixlcrypt-content/users/patrik.palmer%40gmail.com/src/28973449265_07e3aa5d2e_b.jpg'),
+    (select id from pixlcrypt.tag where key='Flora' and user_id=(select id from pixlcrypt.user where email='patrik.palmer@gmail.com'))
 );
 
 --Insert item

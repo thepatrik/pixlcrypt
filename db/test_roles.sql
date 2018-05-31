@@ -47,13 +47,13 @@ create policy delete_user on pixlcrypt.user for delete to pixlcrypt_user
 create policy select_item on pixlcrypt.item for select to pixlcrypt_user
   using (user_id = (select id from pixlcrypt.user where email = current_setting('jwt.claims.email')));
 
-create policy update_item on pixlcrypt.item for insert to pixlcrypt_user
-  using (user_id = (select id from pixlcrypt.user where email = current_setting('jwt.claims.email')));
+create policy insert_item on pixlcrypt.item for insert to pixlcrypt_user
+  with check (user_id = (select id from pixlcrypt.user where email = current_setting('jwt.claims.email')));
 
 create policy update_item on pixlcrypt.item for update to pixlcrypt_user
   using (user_id = (select id from pixlcrypt.user where email = current_setting('jwt.claims.email')));
 
-create policy update_item on pixlcrypt.item for delete to pixlcrypt_user
+create policy delete_item on pixlcrypt.item for delete to pixlcrypt_user
   using (user_id = (select id from pixlcrypt.user where email = current_setting('jwt.claims.email')));
 
 -- Tag policies
