@@ -93,6 +93,8 @@ describe("HTTP POST /graphql allUsers", () => {
                 allUsers {
                     edges {
                         node {
+                            nodeId,
+                            name,
                             email
                         }
                     }
@@ -114,7 +116,7 @@ describe("HTTP POST /graphql allItems", () => {
                 allItems {
                     edges {
                         node {
-                            id
+                            nodeId
                         }
                     }
                 }
@@ -135,7 +137,7 @@ describe("HTTP POST /graphql allItems (first 10)", () => {
                 allItems (first: 10) {
                     edges {
                         node {
-                            id
+                            nodeId
                             src
                             caption
                             description

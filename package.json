@@ -5,6 +5,8 @@
   "main": "lib/app.js",
   "private": true,
   "scripts": {
+    "apidoc": "node_modules/apidoc/bin/apidoc -i lib/ -o gen/apidoc/v1",
+    "apidoc:open": "open http://localhost:5000/developer/v1",
     "aws:install:cli": "pip install awscli --upgrade --user",
     "aws:ecs:auth": "eval $( aws ecr get-login --no-include-email --region eu-west-1 )",
     "aws:ecs:deploy": "npm run aws:ecs:auth && npm run docker:build && npm run docker:tag && npm run docker:push",
@@ -23,7 +25,7 @@
     "eslint:fix": "./node_modules/.bin/eslint lib test --fix",
     "start": "node lib",
     "pretest": "make recreate-with-data --directory db",
-    "test": "NODE_ENV=test ./node_modules/.bin/mocha --reporter spec --bail --exit",
+    "test": "NODE_ENV=test ./node_modules/.bin/mocha --reporter spec --timeout 10000 --bail --exit",
     "validate": "npm run eslint && npm test"
   },
   "repository": {
@@ -35,6 +37,16 @@
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/thepatrik/pixlcrypt/issues"
+  },
+  "apidoc": {
+    "url": "https://api.pixlcrypt.com",
+    "name": "Pixlcrypt API",
+    "title": "Pixlcrypt API",
+    "version": "1.0.0",
+    "header": {
+      "title": "Pixlcrypt API",
+      "filename": "apidoc/header.md"
+    }
   },
   "homepage": "https://github.com/thepatrik/pixlcrypt#readme",
   "dependencies": {
@@ -55,6 +67,7 @@
     "restify-errors": "^6.0.0"
   },
   "devDependencies": {
+    "apidoc": "^0.17.6",
     "chai": "^4.1.2",
     "eslint": "^4.19.1",
     "fakefile": "0.0.9",

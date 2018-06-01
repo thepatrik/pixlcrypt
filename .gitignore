@@ -2,4 +2,5 @@ node_modules
 .env
 build
 build.zip
+gen
 .DS_Store

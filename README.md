@@ -47,11 +47,19 @@ $ make test
 ```
 
 Run linter
+
 ```bash
 $ make eslint
 ```
 
+Generate apidoc - available at [docs/v1](http://localhost:5000/docs/v1)
+
+```bash
+$ make apidoc
+```
+
 Create AWS lambda distribution
+
 ```bash
 $ make lambda
 ```
