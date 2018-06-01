@@ -30,6 +30,29 @@ describe("Fetch development access token", () => {
     });
 });
 
+describe("HTTP POST /presign", () => {
+    it("401 - unauthorized", done => {
+        request(app)
+            .post("/presign")
+            .expect(401, done);
+    });
+    it("400 - no urls sent", done => {
+        request(app)
+            .post("/presign")
+            .set("Authorization", "Bearer " + token)
+            .expect(400, done);
+    });
+    it("200 - ok", done => {
+        request(app)
+            .post("/presign")
+            .set("Authorization", "Bearer " + token)
+            .send({urls: s3Url + "," + s3Url})
+            .expect(res => {
+                expect(res.body.length).to.equal(2);})
+            .expect(200, done);
+    });
+});
+
 describe("HTTP GET /presign", () => {
     it("401 - unauthorized", done => {
         request(app)
@@ -56,6 +79,7 @@ describe("HTTP GET 404", () => {
     it("404 - not found", done => {
         request(app)
             .get("/abracadabra")
+            .set("Authorization", "Bearer " + token)
             .expect(404, done);
     });
 });
