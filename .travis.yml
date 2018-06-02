@@ -5,13 +5,11 @@ node_js: 10
 addons:
     postgresql: "9.6"
 
-install:
-    - npm ci
+install: npm ci
 
 # keep the npm cache around to speed up installs
 cache:
-    directories:
-        - "$HOME/.npm"
+    directories: "$HOME/.npm"
 
 services: docker
 

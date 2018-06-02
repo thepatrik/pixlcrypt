@@ -10,8 +10,8 @@
     "aws:install:cli": "pip install awscli --upgrade --user",
     "aws:ecs:auth": "eval $( aws ecr get-login --no-include-email --region eu-west-1 )",
     "aws:ecs:deploy": "npm run aws:ecs:auth && npm run docker:build && npm run docker:tag && npm run docker:push",
-    "prebuild": "rm -rf build ; mkdir -p build",
-    "build": "cp -a node_modules lib/. build",
+    "prebuild": "rm -rf build ; mkdir -p build ; cp package-lock.json build ; cp package.json build ; cd build ; npm i --production",
+    "build": "cp -a lib/. build",
     "prelambda": "npm run build",
     "lambda": "cd build ; zip -r ../build.zip *",
     "connect": "npx postgraphile -c postgres://pixlcrypt_postgraphile:SuperSecret1234@localhost/$(whoami) --schema pixlcrypt",
@@ -51,7 +51,6 @@
   "homepage": "https://github.com/thepatrik/pixlcrypt#readme",
   "dependencies": {
     "async": "^2.6.1",
-    "aws-sdk": "^2.247.1",
     "aws-serverless-express": "^3.2.0",
     "body-parser": "^1.18.3",
     "bunyan": "^1.8.12",
@@ -67,6 +66,7 @@
     "restify-errors": "^6.0.0"
   },
   "devDependencies": {
+    "aws-sdk": "^2.247.1",
     "apidoc": "^0.17.6",
     "chai": "^4.1.2",
     "eslint": "^4.19.1",
