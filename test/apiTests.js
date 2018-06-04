@@ -5,6 +5,7 @@ const request = require("supertest");
 const app = require("../lib/app");
 const awsHelper = require("../lib/awsHelper");
 const s3Url = "https://s3-eu-west-1.amazonaws.com/pixlcrypt-content/users/pixlcrypt%40gmail.com/src/28973449265_07e3aa5d2e_b.jpg";
+const flickrUrl = "https://c2.staticflickr.com/9/8817/28973449265_07e3aa5d2e_b.jpg";
 const username = process.env.TEST_USER_USERNAME;
 const password = process.env.TEST_USER_PASSWORD;
 let token;
@@ -51,6 +52,15 @@ describe("HTTP POST /presign", () => {
                 expect(res.body.length).to.equal(2);})
             .expect(200, done);
     });
+    it("200 (no s3 urls) - ok", done => {
+        request(app)
+            .post("/presign")
+            .set("Authorization", "Bearer " + token)
+            .send({urls: flickrUrl + "," + flickrUrl})
+            .expect(res => {
+                expect(res.body.length).to.equal(0);})
+            .expect(200, done);
+    });
 });
 
 describe("HTTP GET /presign", () => {
@@ -63,6 +73,14 @@ describe("HTTP GET /presign", () => {
         request(app)
             .get("/presign")
             .set("Authorization", "Bearer " + token)
+            .expect(400, done);
+    });
+    it("400 (no s3 url) - ok", done => {
+        request(app)
+            .get("/presign?url=" + flickrUrl)
+            .set("Authorization", "Bearer " + token)
+            .expect(res => {
+                expect(res.body).to.be.empty;})
             .expect(400, done);
     });
     it("200 - ok", done => {
