@@ -20,7 +20,7 @@ values(
 insert into
 pixlcrypt.item(src, caption, description, mime, content_type, user_id)
 values(
-    'https://s3-eu-west-1.amazonaws.com/pixlcrypt-content/users/patrik.palmer%40gmail.com/src/28973449265_07e3aa5d2e_b.jpg',
+    'https://s3-eu-west-1.amazonaws.com/pixlcrypt-content/users/patrik.palmer@gmail.com/src/28973449265_07e3aa5d2e_o.jpg',
     'After Rain (Jeshu John - designerspics.com)',
     'Totally awesome stuff',
     'image/jpeg',
@@ -31,10 +31,10 @@ values(
 insert into
 pixlcrypt.thumb(src, width, height, item_id)
 values(
-    'https://s3-eu-west-1.amazonaws.com/pixlcrypt-content/users/patrik.palmer%40gmail.com/tmb/28973449265_07e3aa5d2e_n.jpg',
+    'https://s3-eu-west-1.amazonaws.com/pixlcrypt-content/users/patrik.palmer@gmail.com/tmb/28973449265_07e3aa5d2e_t.jpg',
     320,
     174,
-    (select id from pixlcrypt.item where src='https://s3-eu-west-1.amazonaws.com/pixlcrypt-content/users/patrik.palmer%40gmail.com/src/28973449265_07e3aa5d2e_b.jpg')
+    (select id from pixlcrypt.item where src='https://s3-eu-west-1.amazonaws.com/pixlcrypt-content/users/patrik.palmer@gmail.com/src/28973449265_07e3aa5d2e_o.jpg')
 );
 
 insert into
@@ -56,14 +56,14 @@ values(
 insert into
 pixlcrypt.item_tag(item_id, tag_id)
 values(
-    (select id from pixlcrypt.item where src='https://s3-eu-west-1.amazonaws.com/pixlcrypt-content/users/patrik.palmer%40gmail.com/src/28973449265_07e3aa5d2e_b.jpg'),
+    (select id from pixlcrypt.item where src='https://s3-eu-west-1.amazonaws.com/pixlcrypt-content/users/patrik.palmer@gmail.com/src/28973449265_07e3aa5d2e_o.jpg'),
     (select id from pixlcrypt.tag where key='Nature' and user_id=(select id from pixlcrypt.user where email='patrik.palmer@gmail.com'))
 );
 
 insert into
 pixlcrypt.item_tag(item_id, tag_id)
 values(
-    (select id from pixlcrypt.item where src='https://s3-eu-west-1.amazonaws.com/pixlcrypt-content/users/patrik.palmer%40gmail.com/src/28973449265_07e3aa5d2e_b.jpg'),
+    (select id from pixlcrypt.item where src='https://s3-eu-west-1.amazonaws.com/pixlcrypt-content/users/patrik.palmer@gmail.com/src/28973449265_07e3aa5d2e_o.jpg'),
     (select id from pixlcrypt.tag where key='Flora' and user_id=(select id from pixlcrypt.user where email='patrik.palmer@gmail.com'))
 );
 

@@ -1,4 +1,5 @@
 import boto3
+import urllib
 from os import path
 from PIL import Image
 from PIL.ExifTags import TAGS
@@ -38,7 +39,6 @@ def create_thumb(filename, obj, size):
 
 def getThumbName(filename):
     name, ext = path.splitext(filename)
-    print name[-2:]
     if len(name) > 1 and name[-2:] == '_o':
         name = name[:-2]
 
@@ -50,6 +50,7 @@ def lambda_handler(event, context):
     for record in event['Records']:
         bucket = record['s3']['bucket']['name']
         key = record['s3']['object']['key']
+        key = urllib.unquote(key)
 
         print 'Downloading file (' + path.join(bucket, key) + ') from s3...'
         obj = get_file_from_s3(bucket, key)
