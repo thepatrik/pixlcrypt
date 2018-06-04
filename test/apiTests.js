@@ -73,6 +73,14 @@ describe("HTTP GET /presign", () => {
                 expect(res.body.url).to.not.be.empty;})
             .expect(200, done);
     });
+    it("200 (putObject) - ok", done => {
+        request(app)
+            .get("/presign?url=" + s3Url + "&operation=putObject")
+            .set("Authorization", "Bearer " + token)
+            .expect(res => {
+                expect(res.body.url).to.not.be.empty;})
+            .expect(200, done);
+    });
 });
 
 describe("HTTP GET 404", () => {
