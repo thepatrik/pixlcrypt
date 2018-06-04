@@ -3,6 +3,7 @@ from os import path
 from PIL import Image
 from PIL.ExifTags import TAGS
 
+jpg_ext = '.jpg'
 thumb_width = 300
 thumb_height = 300
 thumb_size = thumb_width, thumb_height
@@ -35,6 +36,14 @@ def create_thumb(filename, obj, size):
     img.save(filepath, 'JPEG')
     return filepath
 
+def getThumbName(filename):
+    name, ext = path.splitext(filename)
+    print name[-2:]
+    if len(name) > 1 and name[-2:] == '_o':
+        name = name[:-2]
+
+    return name + '_t' + jpg_ext
+
 def lambda_handler(event, context):
     print "Got lambda event. Let's get to work"
 
@@ -46,10 +55,11 @@ def lambda_handler(event, context):
         obj = get_file_from_s3(bucket, key)
 
         basename, filename = path.split(key)
-        filepath = create_thumb(filename, obj, thumb_size)
+        thumbName = getThumbName(filename)
+        filepath = create_thumb(thumbName, obj, thumb_size)
         print 'Thumbnail (' + str(thumb_width) + 'x' + str(thumb_height) + ') created in', filepath
 
-        thumb_key = basename + '/.tmb/' + filename
+        thumb_key = basename + '/.tmb/' + thumbName
         print 'Uploading file (' + path.join(bucket, thumb_key) + ') to s3...'
         upload_file_to_s3(filepath, bucket, thumb_key)
 

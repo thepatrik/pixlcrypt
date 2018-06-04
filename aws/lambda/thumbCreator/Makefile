@@ -3,4 +3,8 @@
 .PHONY: install
 install:
 	sudo pip install pillow
-	pip install boto3
+	sudo pip install boto3
+
+.PHONY: test
+test:
+	python lambda_test.py
