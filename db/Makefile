@@ -41,3 +41,11 @@ docker-build:
 .PHONY: docker-run
 docker-run:
 	docker run thepatrik/pixlcrypt-db
+
+.PHONY: docker-push
+docker-push:
+	docker push thepatrik/pixlcrypt-db:latest
+
+.PHONY: docker-tag
+docker-tag:
+	docker tag thepatrik/pixlcrypt-db:latest thepatrik/pixlcrypt-db:latest
