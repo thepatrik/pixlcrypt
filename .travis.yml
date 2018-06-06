@@ -13,8 +13,6 @@ cache:
 
 services: docker
 
-before_install: pip install awscli --user
-
 before_script:
     - psql -c 'create database travis_ci_test;' -U postgres
     - make db
@@ -23,4 +21,7 @@ script:
     - make eslint
     - make test
 
-after_success: make aws-ecs-deploy
+after_success:
+    - docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD ;
+    - make docker-deploy
+    - make db-docker-deploy
