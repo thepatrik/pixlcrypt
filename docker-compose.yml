@@ -1,0 +1,44 @@
+version: '3'
+services:
+
+    # Database
+    postgresql:
+        image: thepatrik/pixlcrypt-db:latest
+        ports:
+            - 5432:5432
+        volumes:
+            - .volumes/postgres/data:/var/lib/postgresql/data
+        networks:
+            pixlcryptnet:
+                aliases:
+                    - pixlcrypt.ct6e4mjshqab.eu-west-1.rds.amazonaws.com
+
+    # Backend
+    pixlcrypt:
+        image: thepatrik/pixlcrypt:latest
+        depends_on:
+            - postgresql
+        ports:
+            - 5000:5000
+        environment:
+            - NODE_ENV=development
+            - DATABASE_SCHEMA=pixlcrypt
+            - DATABASE_URL=postgresql
+        networks:
+            pixlcryptnet:
+                aliases:
+                    - api.pixlcrypt.com
+
+    # Web app
+    pixlcrypt-web:
+        image: thepatrik/pixlcrypt-web:latest
+        ports:
+            - 80:80
+        networks:
+            pixlcryptnet:
+                aliases:
+                    - pixlcrypt.com
+
+networks:
+    pixlcryptnet:
+        driver: bridge
