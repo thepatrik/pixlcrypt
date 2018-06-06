@@ -33,3 +33,11 @@ db: schema roles
 .PHONY: roles
 roles:
 	psql -f ./test_roles.sql
+
+.PHONY: docker-build
+docker-build:
+	docker build -t thepatrik/pixlcrypt-db .
+
+.PHONY: docker-run
+docker-run:
+	docker run thepatrik/pixlcrypt-db
