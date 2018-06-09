@@ -2,8 +2,8 @@
 
 .PHONY: install
 install:
-	sudo pip install pillow
 	sudo pip install boto3
+	sudo pip install pillow
 	sudo pip install psycopg2
 	pip install -U python-dotenv
 

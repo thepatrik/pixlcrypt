@@ -8,14 +8,7 @@ Create distribution
 
     docker run --rm -it -v "$PWD:/code" lambci/lambda:build-python2.7 sh
 	cd /code
-	virtualenv env
-	source env/bin/activate
-	pip install pillow psycopg2 python-dotenv
-	cp -R env/lib/python2.7/site-packages/PIL ./
-	cp -R env/lib/python2.7/site-packages/psycopg2 ./
-	cp -R env/lib/python2.7/site-packages/python_dotenv-0.8.2.dist-info ./
-	zip -r dist.$(date +%Y-%m-%d).zip awslambda.py pixlcrypt_db.py thumbs.py PIL psycopg2 python_dotenv-0.8.2.dist-info
-	exit
+	./create_dist
 
 Upload to S3
 
