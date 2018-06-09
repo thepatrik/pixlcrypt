@@ -14,5 +14,5 @@ def create_thumb(filename, obj, size, filepath):
                 break
 
     img.thumbnail(size, Image.ANTIALIAS)
-    img.save(filepath, 'JPEG')
+    img.save(filepath, format='JPEG', subsampling=0, quality=100)
     return img.size
