@@ -71,6 +71,27 @@ values(
 insert into
 pixlcrypt.item(src, caption, description, mime, content_type, user_id)
 values(
+    'https://s3-eu-west-1.amazonaws.com/pixlcrypt-content/users/pixlcrypt@gmail.com/src/28973449265_07e3aa5d2e_b.jpg',
+    'Crazy',
+    'Totally awesome stuff',
+    'image/jpeg',
+    'photo',
+    (select id from pixlcrypt.user where email='pixlcrypt@gmail.com')
+);
+
+insert into
+pixlcrypt.thumb(src, width, height, item_id)
+values(
+    'https://s3-eu-west-1.amazonaws.com/pixlcrypt-content/users/pixlcrypt@gmail.com/src/28973449265_07e3aa5d2e_b.jpg',
+    320,
+    174,
+    (select id from pixlcrypt.item where src='https://s3-eu-west-1.amazonaws.com/pixlcrypt-content/users/pixlcrypt@gmail.com/src/28973449265_07e3aa5d2e_b.jpg')
+);
+
+--Insert item
+insert into
+pixlcrypt.item(src, caption, description, mime, content_type, user_id)
+values(
     'https://c2.staticflickr.com/9/8817/28973449265_07e3aa5d2e_b.jpg',
     'After Rain (Jeshu John - designerspics.com)',
     'Totally awesome stuff',

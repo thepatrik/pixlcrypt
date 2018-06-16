@@ -148,7 +148,7 @@ describe("HTTP POST /graphql allItems", () => {
             }`})
             .type("form")
             .expect(res => {
-                expect(res.body.data.allItems.edges.length).to.equal(24);})
+                expect(res.body.data.allItems.edges.length).to.equal(25);})
             .expect(200, done);
     });
 });
