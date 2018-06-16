@@ -1,5 +1,4 @@
 "use strict";
-/* jshint -W030 */
 const expect = require("chai").expect;
 const awsHelper = require("../lib/awsHelper");
 const s3Url = "https://s3-eu-west-1.amazonaws.com/pixlcrypt-content/users/pixlcrypt%40gmail.com/src/28973449265_07e3aa5d2e_b.jpg";
@@ -23,7 +22,7 @@ describe("getS3Obj tests", () => {
 describe("getPresignedUrl tests", () => {
     it("Should be able to fetch a presigned url", done => {
         let s3Obj = awsHelper.toS3Obj(s3Url);
-        awsHelper.getPresignedUrl(s3Obj.bucket, s3Obj.key).then(url => {
+        awsHelper.getPresignedUrlAsync(s3Obj.bucket, s3Obj.key).then(url => {
             expect(url).to.not.be.empty;
             done();
         });

@@ -62,6 +62,7 @@
     "cors": "^2.8.4",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
+    "express-interceptor": "^1.2.0",
     "express-jwt": "^5.3.1",
     "express-unless": "^0.5.0",
     "helmet": "^3.12.0",
