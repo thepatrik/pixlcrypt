@@ -7,6 +7,7 @@ const s3Url = "https://s3-eu-west-1.amazonaws.com/pixlcrypt-content/users/pixlcr
 const flickrUrl = "https://c2.staticflickr.com/9/8817/28973449265_07e3aa5d2e_b.jpg";
 const username = process.env.TEST_USER_USERNAME;
 const password = process.env.TEST_USER_PASSWORD;
+const expiredToken = "eyJraWQiOiJZUGhOZWZYY3piS01qcFdaY3dmbjZyb01Wa0xwNzJnbyt2SFpsaVMrSHFjPSIsImFsZyI6IlJTMjU2In0.eyJzdWIiOiI5NDU5YjlmMy1mOTQ5LTRlMDEtOTY3YS0yMTIwYWEzZTA5YzAiLCJjb2duaXRvOmdyb3VwcyI6WyJldS13ZXN0LTFfVWpnV2JCZ1E4X0dvb2dsZSJdLCJ0b2tlbl91c2UiOiJhY2Nlc3MiLCJzY29wZSI6InBob25lIG9wZW5pZCBodHRwczpcL1wvYXBpLnBpeGxjcnlwdC5jb21cL3Bob3Rvczp3cml0ZSBlbWFpbCIsImF1dGhfdGltZSI6MTUyOTY2MDc0NCwiaXNzIjoiaHR0cHM6XC9cL2NvZ25pdG8taWRwLmV1LXdlc3QtMS5hbWF6b25hd3MuY29tXC9ldS13ZXN0LTFfVWpnV2JCZ1E4IiwiZXhwIjoxNTI5NjY0MzQ0LCJpYXQiOjE1Mjk2NjA3NDYsInZlcnNpb24iOjIsImp0aSI6IjEzNDc2Mjc5LTU0YWEtNGRlMy05YzQ2LTE3ZDhjOGJjMzdkNiIsImNsaWVudF9pZCI6IjU0MmZ1OGk0bmZiNGVja245NWo0dWVrMW02IiwidXNlcm5hbWUiOiJHb29nbGVfMTAwMjIyMjMyODk0Njc2MjkyNTIzIn0.J23_fE7Drd2ch4MjjoKmQEP2pYftqtEYioSXYGO5tk_MRQJA7YieN0sj3cD2fDtggBAzDTn5nfM0eXNeagdd9erZ97YhJjAOhhF9QoGxBOKCe96MkheHdjZGFkr4DAb2_cEoLqiGWYaPtnmGhvk1GPLZnnBb5dLRcvArloXkBIoylKuDY6PskJsTVv7Q4U8pFH_ZzLCNkiTMGIEk9KiEOTJ8B-ID4AuRjWuaLyDtihJSTZdRds0x0U1lWWtlnD1XvuC3PZPaB4VaQ2flVf1m5vO3_S275Acpv6FwmgjWcbkW_KX7WnqMHNznpRcIgsZXfu2OrP1osjG12NRnOF3Xyw";
 let token;
 
 describe("HTTP GET /health", () => {
@@ -110,6 +111,24 @@ describe("HTTP GET 404", () => {
 });
 
 describe("HTTP POST /graphql allUsers", () => {
+    it("401 - expired token", done => {
+        request(app)
+            .post("/graphql")
+            .set("Authorization", "Bearer " + expiredToken)
+            .send({query: `{
+                allUsers {
+                    edges {
+                        node {
+                            nodeId,
+                            name,
+                            email
+                        }
+                    }
+                }
+            }`})
+            .type("form")
+            .expect(401, done);
+    });
     it("200 - ok", done => {
         request(app)
             .post("/graphql")
