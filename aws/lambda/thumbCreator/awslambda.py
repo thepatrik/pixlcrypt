@@ -2,6 +2,7 @@ import boto3
 import thumbs
 import pixlcrypt_db as db
 import urllib
+import mimetypes
 from os import path
 
 S3_URL = 'https://s3-eu-west-1.amazonaws.com/'
@@ -22,12 +23,19 @@ def upload_file_to_s3(path, bucket, key):
 def to_s3_url(bucket, key):
     return S3_URL + bucket + '/' + key
 
-def getThumbName(filename):
+def get_thumb_name(filename):
     name, ext = path.splitext(filename)
     if len(name) > 1 and name[-2:] == '_o':
         name = name[:-2]
 
     return name + '_t' + JPG_EXT
+
+def get_mimetype(filename):
+    return mimetypes.guess_type(filename)[0]
+
+def get_mediatype(mimetype):
+    t = mimetype.split('/')[0]
+    return 'photo' if t == 'image' else 'video'
 
 def handler(event, context, upload_file=True):
     print "Got lambda event. Let's get to work"
@@ -45,12 +53,14 @@ def handler(event, context, upload_file=True):
         email = key.split('/')[1]
         user_id = db.get_user_id(email)
         src = to_s3_url(bucket, key)
-        item_id = db.insert_item(src, 'image/jpeg', 'photo', user_id)
+        basename, filename = path.split(key)
+        mimetype = get_mimetype(filename)
+        mediatype = get_mediatype(mimetype)
+        item_id = db.insert_item(src, mimetype, mediatype, user_id)
         print 'Inserted metadata in db', item_id
 
         # Create thumbnail from original
-        basename, filename = path.split(key)
-        thumbName = getThumbName(filename)
+        thumbName = get_thumb_name(filename)
         filepath = '/tmp/' + filename
         thumb_size = thumbs.create_thumb(thumbName, obj, THUMB_SIZE, filepath)
         print 'Thumbnail %s created in %s' % (thumb_size, filepath)
