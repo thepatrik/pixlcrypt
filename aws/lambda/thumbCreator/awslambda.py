@@ -3,6 +3,8 @@ import thumbs
 import pixlcrypt_db as db
 import urllib
 import mimetypes
+import time
+import datetime
 from os import path
 
 S3_URL = 'https://s3-eu-west-1.amazonaws.com/'
@@ -37,6 +39,9 @@ def get_mediatype(mimetype):
     t = mimetype.split('/')[0]
     return 'photo' if t == 'image' else 'video'
 
+def to_timestamp(s):
+    return int(time.mktime(datetime.datetime.strptime(s, '%Y:%m:%d %H:%M:%S').timetuple()))
+
 def handler(event, context, upload_file=True):
     print "Got lambda event. Let's get to work"
 
@@ -48,22 +53,33 @@ def handler(event, context, upload_file=True):
         # Download original file from S3
         print 'Downloading file (' + path.join(bucket, key) + ') from s3...'
         obj = get_file_from_s3(bucket, key)
+        print 'Done'
+
+        # Create thumbnail from original
+        basename, filename = path.split(key)
+        thumbName = get_thumb_name(filename)
+        filepath = '/tmp/' + filename
+        print 'Creating thumb...'
+        thumb_info = thumbs.create_thumb(thumbName, obj, THUMB_SIZE, filepath)
+        print 'Thumbnail %s created in %s' % (thumb_info['size'], filepath)
 
         # Make sure the metadata from the orignal is saved in db
         email = key.split('/')[1]
         user_id = db.get_user_id(email)
         src = to_s3_url(bucket, key)
-        basename, filename = path.split(key)
         mimetype = get_mimetype(filename)
         mediatype = get_mediatype(mimetype)
-        item_id = db.insert_item(src, mimetype, mediatype, user_id)
-        print 'Inserted metadata in db', item_id
 
-        # Create thumbnail from original
-        thumbName = get_thumb_name(filename)
-        filepath = '/tmp/' + filename
-        thumb_size = thumbs.create_thumb(thumbName, obj, THUMB_SIZE, filepath)
-        print 'Thumbnail %s created in %s' % (thumb_size, filepath)
+        date = thumb_info['date']
+        if date:
+            try:
+                date = to_timestamp(date)
+            except ValueError:
+                print 'Got error during timestamp conversion from', date
+                date = None
+
+        item_id = db.insert_item(src, mimetype, mediatype, user_id, date)
+        print 'Inserted metadata in db with id:', item_id
 
         if upload_file:
             # Upload thumbnail to S3
@@ -73,7 +89,7 @@ def handler(event, context, upload_file=True):
 
             # Save thumb metadata to db
             thumb_src = to_s3_url(bucket, thumb_key)
-            thumb_id = db.insert_thumb(thumb_src, thumb_size[0], thumb_size[1], item_id)
+            thumb_id = db.insert_thumb(thumb_src, thumb_info['size'][0], thumb_info['size'][1], item_id)
             print 'Inserted thumb metadata in db', thumb_id
 
     print 'All done'

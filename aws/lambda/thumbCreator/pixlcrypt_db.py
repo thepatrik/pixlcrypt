@@ -25,10 +25,14 @@ def get_user_id(email):
     commit_close(conn, cur)
     return id
 
-def insert_item(src, mime, content_type, user_id):
+def insert_item(src, mime, content_type, user_id, date):
     conn = connect()
     cur = conn.cursor()
-    cur.execute("insert into pixlcrypt.item(src, mime, content_type, user_id) values('" + src + "','" + mime + "','" + content_type + "','" + str(user_id) + "') returning id;")
+    if date is not None:
+        cur.execute("insert into pixlcrypt.item(src, mime, content_type, user_id, created_at) values('" + src + "','" + mime + "','" + content_type + "','" + str(user_id) + "',to_timestamp(" + str(date) + ")) returning id;")
+    else:
+        cur.execute("insert into pixlcrypt.item(src, mime, content_type, user_id) values('" + src + "','" + mime + "','" + content_type + "','" + str(user_id) + "') returning id;")
+
     id = cur.fetchone()[0]
     commit_close(conn, cur)
     return id

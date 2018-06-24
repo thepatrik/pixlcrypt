@@ -18,7 +18,7 @@ create table pixlcrypt.user (
 comment on table pixlcrypt.user is 'A pixlcrypt user.';
 comment on column pixlcrypt.user.id is 'The primary key for the user.';
 comment on column pixlcrypt.user.name is 'The name of the user.';
-comment on column pixlcrypt.user.created_at is 'The time the user was last updated.';
+comment on column pixlcrypt.user.updated_at is 'The time the user was last updated.';
 comment on column pixlcrypt.user.created_at is 'The time the user was created.';
 
 create function pixlcrypt.current_user() returns pixlcrypt.user as $$
