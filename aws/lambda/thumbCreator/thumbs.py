@@ -1,27 +1,28 @@
 from PIL import Image
 from PIL.ExifTags import TAGS
 
-def create_thumb(filename, obj, size, filepath):
-    img = Image.open(obj)
+def create_thumb(obj, size, filepath):
+    with Image.open(obj) as img:
+        date = get_date_time_original(img)
+        orientation = get_exif_orientation(img)
+        if orientation == 3:
+            img = img.rotate(180)
+        elif orientation == 6:
+            img = img.rotate(270)
+        elif orientation == 8:
+            img = img.rotate(90)
 
-    date = get_date_time_original(img)
-    orientation = get_exif_orientation(img)
-    if orientation == 3:
-        img = img.rotate(180)
-    elif orientation == 6:
-        img = img.rotate(270)
-    elif orientation == 8:
-        img = img.rotate(90)
-
-    img = img.convert('RGB')
-    img.thumbnail(size, Image.ANTIALIAS)
-    img.save(filepath, format='JPEG', subsampling=0, quality=100)
-    return {
-        'size': img.size,
-        'format': "JPEG",
-        'orientation': orientation,
-        'date': date
-    }
+        img = img.convert('RGB')
+        img.thumbnail(size, Image.ANTIALIAS)
+        img.save(filepath, format='JPEG', subsampling=0, quality=100)
+        size = img.size
+        return {
+            'size': size,
+            'format': "JPEG",
+            'orientation': orientation,
+            'date': date,
+            'filepath': filepath
+        }
 
 def get_exif_orientation(img):
     if hasattr(img, '_getexif'):
