@@ -1,7 +1,7 @@
 from PIL import Image
 from PIL.ExifTags import TAGS
 
-def create_thumb(obj, size, filepath):
+def create_thumb(obj, filepath, size):
     with Image.open(obj) as img:
         date = get_date_time_original(img)
         orientation = get_exif_orientation(img)
