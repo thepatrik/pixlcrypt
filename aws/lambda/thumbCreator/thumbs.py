@@ -37,6 +37,6 @@ def get_exif_orientation(img):
 def get_date_time_original(img):
     if hasattr(img, '_getexif'):
         exif = img._getexif()
-        if exif != None:
+        if exif != None and 36867 in exif:
             return exif[36867]
     return None

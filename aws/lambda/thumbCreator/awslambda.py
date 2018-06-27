@@ -6,7 +6,9 @@ import urllib
 import mimetypes
 import time
 import datetime
+import os
 from os import path
+import time
 
 S3_URL = 'https://s3-eu-west-1.amazonaws.com/'
 T_THUMB_SIZE = 300, 300
@@ -62,8 +64,14 @@ def _get_presigned_url(bucket, key):
         }
     )
 
+def _set_env():
+    if os.environ.get('LAMBDA_TASK_ROOT') is not None:
+        os.environ['PATH'] = os.environ['PATH'] + ':/var/task'
+        os.environ['FFMPEG_PATH'] = os.environ.get('LAMBDA_TASK_ROOT') + '/ffmpeg'
+
 def handler(event, context, upload_file=True):
     print('Got lambda event. Go to work!')
+    _set_env()
 
     for record in event['Records']:
         bucket = record['s3']['bucket']['name']
@@ -77,21 +85,24 @@ def handler(event, context, upload_file=True):
         if mediatype == 'photo':
             # Download original file from S3
             print('Downloading file (' + path.join(bucket, key) + ') from s3...')
+            start_time = time.time()
             obj = _get_file_from_s3(bucket, key)
-            print('Done')
+            print('Done, took %s secs.' % round(time.time() - start_time), 2)
 
         elif mediatype == 'video':
             obj = _get_presigned_url(bucket, key)
 
         # Create a big thumbnail (*_b.jpg)
         print('Creating big thumb...')
+        start_time = time.time()
         b_thumb_info = _create_thumb(obj, B_THUMB_SIZE, filename, '_b', mediatype)
-        print('Thumbnail %s created in %s' % (b_thumb_info['size'], b_thumb_info['filepath']))
+        print('Thumbnail %s created in %s' % (b_thumb_info['size'], b_thumb_info['filepath']) + ', took %s secs.' % round(time.time() - start_time, 2))
 
         # Create a small thumbnail (*_t.jpg)
         print('Creating small thumb...')
+        start_time = time.time()
         t_thumb_info = _create_thumb(b_thumb_info['filepath'], T_THUMB_SIZE, filename, '_t', mediatype)
-        print('Thumbnail %s created in %s' % (t_thumb_info['size'], t_thumb_info['filepath']))
+        print('Thumbnail %s created in %s' % (t_thumb_info['size'], t_thumb_info['filepath']) + ', took %s secs.' % round(time.time() - start_time, 2))
 
         # Make sure the metadata from the orignal is saved in db
         email = key.split('/')[1]
@@ -114,7 +125,9 @@ def handler(event, context, upload_file=True):
 
             # Upload small thumbnail to S3
             print('Uploading file (' + path.join(bucket, t_thumb_key) + ') to s3...')
+            start_time = time.time()
             CLIENT.upload_file(t_thumb_info['filepath'], bucket, t_thumb_key)
+            print('Done, took %s secs.' % round(time.time() - start_time), 2))
 
             # Save small thumb metadata to db
             t_thumb_src = _to_s3_url(bucket, t_thumb_key)
@@ -126,11 +139,11 @@ def handler(event, context, upload_file=True):
 
             # Upload big thumbnail to S3
             print('Uploading file (' + path.join(bucket, b_thumb_key) + ') to s3...')
+            start_time = time.time()
             CLIENT.upload_file(b_thumb_info['filepath'], bucket, b_thumb_key)
+            print('Done, took %s secs.' % round(time.time() - start_time), 2))
 
             # Save big thumb metadata to db
             b_thumb_src = _to_s3_url(bucket, b_thumb_key)
             b_thumb_id = db.insert_thumb(b_thumb_src, b_thumb_info['size'][0], b_thumb_info['size'][1], item_id)
             print('Inserted thumb metadata in db with id: ' + str(b_thumb_id))
-
-    print('All done')
