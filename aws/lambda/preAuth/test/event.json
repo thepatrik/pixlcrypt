@@ -1,0 +1,23 @@
+{
+    "version": "1",
+    "region": "eu-west-1",
+    "userPoolId": "eu-west-1_UjgWbBgQ8",
+    "userName": "Google_100222232894676292523",
+    "callerContext": {
+        "awsSdkVersion": "aws-sdk-unknown-unknown",
+        "clientId": "542fu8i4nfb4eckn95j4uek1m6"
+    },
+    "triggerSource": "PreAuthentication_Authentication",
+    "request": {
+        "userAttributes": {
+            "sub": "9459b9f3-f949-4e01-967a-2120aa3e09c0",
+            "cognito:user_status": "EXTERNAL_PROVIDER",
+            "identities": "[{\"userId\":\"100222232894676292523\",\"providerName\":\"Google\",\"providerType\":\"Google\",\"issuer\":null,\"primary\":true,\"dateCreated\":1526475162943}]",
+            "name": "Patrik Palmér",
+            "picture": "https://lh5.googleusercontent.com/-zUYrNZT0uBM/AAAAAAAAAAI/AAAAAAAAATw/xIWi2aTiO8g/s96-c/photo.jpg",
+            "email": "patrik.palmer@gmail.com"
+        },
+        "validationData": {}
+    },
+    "response": {}
+}

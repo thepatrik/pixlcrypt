@@ -1,0 +1,23 @@
+{
+  "name": "pre-auth-trigger",
+  "version": "1.0.0",
+  "description": "",
+  "private": true,
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "prebuild": "rm -rf build ; mkdir -p build ; cp package-lock.json build ; cp package.json build ; cd build ; npm i --production",
+    "build": "cp index.js build",
+    "prelambda": "npm run build",
+    "lambda": "cd build ; zip -r ../build.zip *",
+    "test": "node test/lambdaTest.js"
+  },
+  "devDependencies": {
+    "aws-sdk": "^2.266.1",
+    "fakefile": "0.0.9"
+  },
+  "dependencies": {
+    "dotenv": "^6.0.0",
+    "pg": "^7.4.3"
+  }
+}
