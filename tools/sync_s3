@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+aws s3 sync --exclude ".DS_Store" ~/Pictures/GoPro s3://pixlcrypt-content/users/pixlcrypt@gmail.com/
