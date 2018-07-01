@@ -30,15 +30,15 @@ def get_user_id(email):
 
     return id
 
-def insert_item(src, mime, content_type, user_id, date):
+def insert_item(src, mime, orientation, content_type, user_id, date):
     id = None
     conn = _connect()
     try:
         cur = conn.cursor()
         if date is not None:
-            cur.execute("insert into pixlcrypt.item(src, mime, content_type, user_id, created_at) values('" + src + "','" + mime + "','" + content_type + "','" + str(user_id) + "',to_timestamp(" + str(date) + ")) returning id;")
+            cur.execute('insert into pixlcrypt.item(src, mime, orientation, content_type, user_id, created_at) values(%s, %s, %s, %s, %s, to_timestamp(%s)) returning id;', (src, mime, orientation, content_type, user_id, date))
         else:
-            cur.execute("insert into pixlcrypt.item(src, mime, content_type, user_id) values('" + src + "','" + mime + "','" + content_type + "','" + str(user_id) + "') returning id;")
+            cur.execute('insert into pixlcrypt.item(src, mime, orientation, content_type, user_id) values(%s, %s, %s, %s, %s) returning id;', (src, mime, orientation, content_type, user_id))
 
         res = cur.fetchone()
         if res is not None:

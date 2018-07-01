@@ -4,13 +4,10 @@ from PIL.ExifTags import TAGS
 def create_thumb(obj, filepath, size):
     with Image.open(obj) as img:
         date = get_date_time_original(img)
-        orientation = get_exif_orientation(img)
-        if orientation == 3:
-            img = img.rotate(180)
-        elif orientation == 6:
-            img = img.rotate(270)
-        elif orientation == 8:
-            img = img.rotate(90)
+        exif_orientation = get_exif_orientation(img)
+        orientation = _to_orientation_degrees(exif_orientation)
+        if (orientation is not None and orientation > 0):
+            img = img.rotate(orientation)
 
         img = img.convert('RGB')
         img.thumbnail(size, Image.ANTIALIAS)
@@ -23,6 +20,20 @@ def create_thumb(obj, filepath, size):
             'date': date,
             'filepath': filepath
         }
+
+def _to_orientation_degrees(exif_orientation):
+    orientation = 0
+
+    if exif_orientation is None:
+        orientation = None
+    if exif_orientation == 3:
+        orientation = 180
+    elif exif_orientation == 6:
+        orientation = 270
+    elif exif_orientation == 8:
+        orientation = 90
+
+    return orientation
 
 def get_exif_orientation(img):
     if hasattr(img, '_getexif'):

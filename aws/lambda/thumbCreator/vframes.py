@@ -15,7 +15,7 @@ def _resize_frame(filepath, size):
         'format': 'JPEG',
         'filepath': new_filepath,
         'size': img.size,
-        'orientation': 0,
+        'orientation': None,
         'date': None
     }
 

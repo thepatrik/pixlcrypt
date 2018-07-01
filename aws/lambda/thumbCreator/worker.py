@@ -113,7 +113,8 @@ def _create_thumbnails(bucket, key, upload_file):
             print('Got error during timestamp conversion from', exif_date)
             exif_date = None
 
-    item_id = db.insert_item(src, mimetype, mediatype, user_id, exif_date)
+    orientation = b_thumb_info['orientation']
+    item_id = db.insert_item(src, mimetype, orientation, mediatype, user_id, exif_date)
     print('Inserted metadata in db with id: ' + str(item_id))
 
     if upload_file:
