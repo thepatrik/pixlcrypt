@@ -42,6 +42,7 @@ create table pixlcrypt.item (
   description text check (char_length(description) < 2000),
   mime text,
   content_type  pixlcrypt.content_type,
+  orientation integer,
   user_id integer not null references pixlcrypt.user (id),
   updated_at    timestamp default now(),
   created_at    timestamp default now()
