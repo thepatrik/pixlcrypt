@@ -16,11 +16,14 @@ def _commit_close(conn, cur=None):
         cur.close()
 
 def get_user_id(email):
+    id = None
     conn = _connect()
     try:
         cur = conn.cursor()
         cur.execute("select id from pixlcrypt.user where email='" + email + "';")
-        id = str(cur.fetchone()[0])
+        res = cur.fetchone()
+        if res is not None:
+            id = str(res[0])
         _commit_close(conn, cur)
     finally:
         conn.close()
@@ -28,6 +31,7 @@ def get_user_id(email):
     return id
 
 def insert_item(src, mime, content_type, user_id, date):
+    id = None
     conn = _connect()
     try:
         cur = conn.cursor()
@@ -36,7 +40,9 @@ def insert_item(src, mime, content_type, user_id, date):
         else:
             cur.execute("insert into pixlcrypt.item(src, mime, content_type, user_id) values('" + src + "','" + mime + "','" + content_type + "','" + str(user_id) + "') returning id;")
 
-        id = cur.fetchone()[0]
+        res = cur.fetchone()
+        if res is not None:
+            id = res[0]
         _commit_close(conn, cur)
     finally:
         conn.close()
@@ -44,11 +50,14 @@ def insert_item(src, mime, content_type, user_id, date):
     return id
 
 def insert_thumb(src, width, height, item_id):
+    id = None
     conn = _connect()
     try:
         cur = conn.cursor()
         cur.execute("insert into pixlcrypt.thumb(src, width, height, item_id) values('" + src + "','" + str(width) + "','" + str(height) + "','" + str(item_id) + "') returning id;")
-        id = cur.fetchone()[0]
+        res = cur.fetchone()
+        if res is not None:
+            id = res[0]
         _commit_close(conn, cur)
     finally:
         conn.close()
