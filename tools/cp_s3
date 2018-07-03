@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+
+aws s3 cp --recursive ~/Pictures/GoPro/ s3://pixlcrypt-content/users/pixlcrypt@gmail.com/ --exclude ".DS_Store"
