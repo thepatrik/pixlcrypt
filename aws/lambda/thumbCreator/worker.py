@@ -14,6 +14,7 @@ T_THUMB_SIZE = 300, 300
 B_THUMB_SIZE = 1024, 1024
 JPG_EXT = '.jpg'
 CLIENT = boto3.client('s3')
+VIDEO_DOWNSCALING = False
 
 def _get_file_from_s3(bucket, key):
     obj = CLIENT.get_object(
@@ -89,6 +90,14 @@ def _create_thumbnails(bucket, key, upload_file):
 
     elif mediatype == 'video':
         obj = _get_presigned_url(bucket, key)
+        if VIDEO_DOWNSCALING:
+            res = vframes.chkres(obj)
+            if res == '3840x2160':
+                print('Downscaling from 4k to 1080p...')
+                start_time = time.time()
+                out = '/tmp/' + _get_thumbname(filename, '_b', '.mp4')
+                v_info = vframes.downscale(obj, out)
+                print('Video file %s created in %s, took %s secs.' % (v_info['size'], v_info['filepath'], round(time.time() - start_time, 2)))
 
     # Create a big thumbnail (*_b.jpg)
     print('Creating big thumb...')
@@ -144,6 +153,7 @@ def _create_thumbnails(bucket, key, upload_file):
         b_thumb_src = _to_s3_url(bucket, b_thumb_key)
         b_thumb_id = db.insert_thumb(b_thumb_src, b_thumb_info['size'][0], b_thumb_info['size'][1], item_id)
         print('Inserted thumb metadata in db with id: ' + str(b_thumb_id))
+
 
 def start(tasks, upload_file=True):
     _set_env()
